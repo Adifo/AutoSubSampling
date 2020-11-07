@@ -1,0 +1,24 @@
+__default__:
+  mem: 2
+  threads: 1
+  partition: 'workq'
+  name: "{rule}.{wildcards}"
+  time: "24:00:00"
+  output: "logs/cluster/{rule}.{wildcards}.out"
+  error: "logs/cluster/{rule}.{wildcards}.err"
+
+base_index:
+  mem: 12
+  threads: 6
+
+base_stats:
+  mem: 12
+  threads: 6
+
+subsampling:
+  mem: 20
+  threads: 10
+
+index:
+  mem: 12
+  threads: 6

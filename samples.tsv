@@ -1,0 +1,3 @@
+sample	path	size	cov
+HG002	test/test.bam	Homo_sapiens	6,10,15
+HG003	test/test.bam	3100000000	7,14

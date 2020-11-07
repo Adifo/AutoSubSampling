@@ -1,0 +1,5 @@
+name: samplot-env
+channels:
+  - bioconda
+dependencies:
+  - samtools=1.9

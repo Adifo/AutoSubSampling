@@ -1,0 +1,2 @@
+# Sample file. Either subreads.bam or fastq file of PacBio reads
+samples: 'samples.tsv'
