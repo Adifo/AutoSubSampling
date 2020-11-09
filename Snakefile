@@ -32,27 +32,47 @@ def complexExpand(wildcards):
 
 def get_TotLen(input):
 	pattern1 = 'SN'
-	pattern2 = 'total length: (\d+)'
+	pattern2 = 'total length.*?(\d+)'
+	SN_list = list()
+	SN_pass = False
 	with open(input.stats,'rt') as fh:
 		for line in fh:
+			# ~ pprint('Line: '+line)
 			if re.search(pattern1,line):
-				extract = re.search(pattern2)
-				if extract:
-					return int(extract.group(1))
-			else:
+				SN_list.append(line,)
+				SN_pass = True
+			elif (SN_pass):
 				break
+			else:
+				continue
+	
+	# ~ pprint(SN_list)
+	for SN in SN_list:
+		extract = re.search(pattern2,SN)
+		if extract:
+			return int(extract.group(1))
 
 def get_Cigar(input):
 	pattern1 = 'SN'
-	pattern2 = 'bases mapped (cigar): (\d+)'
+	pattern2 = '\(cigar\).*?(\d+)'
+	SN_list = list()
+	SN_pass = False
 	with open(input.stats,'rt') as fh:
 		for line in fh:
+			# ~ pprint('Line: '+line)
 			if re.search(pattern1,line):
-				extract = re.search(pattern2)
-				if extract:
-					return int(extract.group(1))
-			else:
+				SN_list.append(line,)
+				SN_pass = True
+			elif (SN_pass):
 				break
+			else:
+				continue
+	
+	# ~ pprint(SN_list)
+	for SN in SN_list:
+		extract = re.search(pattern2,SN)
+		if extract:
+			return int(extract.group(1))
 
 def get_Size(value):
 	''' Retrieve genome size, either directly from file as numerical value or
@@ -78,7 +98,9 @@ def get_Ratio(wildcards, resources):
 	''' Calculate coverage ratio to produce asked coverage from base bam
 	'''
 	size = get_Size(samples.loc[wildcards.sample, "size"])
-	ratio = format(resources.Cigar/size, '.4f')
+	cov = float(wildcards.cov)
+	cov_base = float(resources.Cigar/size)
+	ratio = format(cov/cov_base, '.4f')
 	return ratio
 
 def get_threads(rule, default):
