@@ -219,7 +219,7 @@ rule reports:
 		with open(str(output),'wt') as fh:
 			print("\t".join(['Sample','Asked Coverage','Given Genome Size','Total Length','Cigar base mapped', 'Sequenced Coverage','Mapped coverage' ]), file=fh)
 			for file in input:
-				match = re.search('subsampling\/(\w+)\/(\w+)-(\d+)x\.bam\.stats',file)
+				match = re.search('subsampling\/(.*?)\/(.*?)-(\d+)x\.bam\.stats',file)
 				sample = match.group(1)
 				cov = match.group(3)
 				size = get_Size(samples.loc[sample, "size"])
