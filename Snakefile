@@ -225,4 +225,4 @@ rule reports:
 				size = get_Size(samples.loc[sample, "size"])
 				cigar = get_Cigar(file)
 				TotLen = get_TotLen(file)
-				print("\t".join([sample,str(cov),str(size),str(TotLen),str(cigar), str(format(cigar/size,'0.4f')), str(format(TotLen/size,'0.4f')) ]), file=fh)
+				print("\t".join([sample,str(cov),str(size),str(TotLen),str(cigar), str(format(TotLen/size,'0.4f')), str(format(cigar/size,'0.4f')) ]), file=fh)
