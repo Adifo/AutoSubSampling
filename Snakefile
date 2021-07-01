@@ -9,7 +9,7 @@ import sys
 
 common_size = { 'Bos_taurus' : 2870000000,
 				'Homo_sapiens' : 3100000000,
-				'Zea_mays' : 2800000000}
+				'Zea_mais' : 2400000000}
 
 samples = pd.read_table(config['samples'], comment='#').set_index('sample', drop=False)
 
@@ -82,6 +82,7 @@ def get_Size(value):
 			return int(common_size[value])
 		else:
 			sys.exit('Error in get_Size ! '+value+' is not an accepted keyword.')
+	# Potential bug here, type Error ?
 	elif re.search('\d+',value):
 		return int(value)
 	else:
@@ -97,8 +98,11 @@ def get_Ratio(wildcards, resources):
 	'''
 	size = get_Size(samples.loc[wildcards.sample, "size"])
 	cov = float(wildcards.cov)
+	# pprint('cov = '+str(cov))
 	cov_base = float(resources.Cigar/size)
+	# pprint('cov base = '+str(cov_base))
 	ratio = format(cov/cov_base, '.4f')
+	# pprint('ratio ='+ratio)
 	return ratio
 
 def get_threads(rule, default):
@@ -219,7 +223,7 @@ rule reports:
 		with open(str(output),'wt') as fh:
 			print("\t".join(['Sample','Asked Coverage','Given Genome Size','Total Length','Cigar base mapped', 'Sequenced Coverage','Mapped coverage' ]), file=fh)
 			for file in input:
-				match = re.search('subsampling\/(.*?)\/(.*?)-(\d+)x\.bam\.stats',file)
+				match = re.search('subsampling\/(.*?)\/(.*?)-([\d.]*\d+)x\.bam\.stats',file)
 				sample = match.group(1)
 				cov = match.group(3)
 				size = get_Size(samples.loc[sample, "size"])
